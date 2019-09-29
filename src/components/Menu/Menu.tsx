@@ -17,6 +17,7 @@ export default (props: OwnProps) => (
 				<Navbar
 					openRegister={props.openRegister}
 					openLogin={props.openLogin}
+					openProvider={props.openProvider}
 					user={props.user}
 					logout={props.logout}
 				/>
@@ -29,6 +30,7 @@ export default (props: OwnProps) => (
 interface OwnProps {
 	openRegister: () => void
 	openLogin: () => void
+	openProvider: () => void
 	user: RootReducerInterface['user']
 	logout: () => void
 }

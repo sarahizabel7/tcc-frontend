@@ -11,8 +11,7 @@ export default () => (
 							Conta Grátis
 						</h5>
 						<p>
-							Lorem ipsum dolor, sit amet consectetur adipisicing
-							elit. Veritatis, dolore!
+							Não custa nada, anunciar ou procurar um serviço. Venha o cadastro é rapidinho!
 						</p>
 					</div>
 				</div>
@@ -21,8 +20,7 @@ export default () => (
 						<i className='far fa-star fa-3x red-text text-lighten-1' />
 						<h5 className='grey-text text-darken-4'>Avaliações</h5>
 						<p>
-							Lorem ipsum dolor, sit amet consectetur adipisicing
-							elit. Veritatis, dolore!
+							Utilizamos sistema de avaliações onde os melhores se destacam!
 						</p>
 					</div>
 				</div>
@@ -33,8 +31,7 @@ export default () => (
 							Diversos Serviços
 						</h5>
 						<p>
-							Lorem ipsum dolor, sit amet consectetur adipisicing
-							elit. Veritatis, dolore!
+							Possuimos uma gama enorme de serviços, reparos, limpeza, manutenção...
 						</p>
 					</div>
 				</div>

@@ -9,12 +9,13 @@ import Menu from '../../components/Menu/Menu'
 import Footer from '../../components/Footer/Footer'
 import RegisterModal from '../Modal/RegisterModal'
 import LoginModal from '../Modal/LoginModal'
+import ProviderModal from '../Modal/ProviderModal'
 import {
 	RegisterInterface,
-	LoginInterface
+	LoginInterface,
+	ProviderInterface
 } from '../../interfaces/commonInterfaces'
 import { axiosInstance } from '../../utils/httpClient'
-import Profile from '../../pages/Settings/MainSettings'
 import ApplicationRouter from './ApplicationRouter'
 import { RootReducerInterface } from '../../interfaces/reducersInterface'
 import { handleLoginError } from '../../utils/errors'
@@ -25,6 +26,7 @@ class MainRouter extends React.Component<Props, State> {
 		this.state = {
 			openLogin: false,
 			openRegister: false,
+			openProviderRegister: false,
 			loading: false,
 			loginErrors: {}
 		}
@@ -41,6 +43,11 @@ class MainRouter extends React.Component<Props, State> {
 			console.log(e.response.data.data.error)
 		}
 	}
+
+	handleProviderRegister = async (providerData: ProviderInterface) => {
+		console.log(providerData)
+	}
+
 	handleModalFinish = async () => {
 		const overlay = document.getElementsByClassName('modal-overlay')[0]
 		if (overlay) {
@@ -52,6 +59,7 @@ class MainRouter extends React.Component<Props, State> {
 			openRegister: false
 		})
 	}
+
 	handleLogin = async (loginData: LoginInterface) => {
 		const { loggedIn } = this.props
 		try {
@@ -78,6 +86,11 @@ class MainRouter extends React.Component<Props, State> {
 			openLogin: true
 		})
 	}
+	handleOpenProvider = () => {
+		this.setState({
+			openProviderRegister: true
+		})
+	}
 
 	handleLogout = () => {
 		const { loggedOut } = this.props
@@ -92,7 +105,7 @@ class MainRouter extends React.Component<Props, State> {
 		}
 	}
 	render() {
-		const { openLogin, openRegister, loading, loginErrors } = this.state
+		const { openLogin, openRegister, loading, loginErrors, openProviderRegister } = this.state
 		const { token } = this.props.user
 		return (
 			<Router history={history}>
@@ -114,9 +127,19 @@ class MainRouter extends React.Component<Props, State> {
 							onLoginClick={this.handleLogin}
 						/>
 					)}
+					{ openProviderRegister && (
+						<ProviderModal
+							loading={loading}
+							modalClose={this.handleModalFinish}
+							open={openProviderRegister}
+							// errors={loginErrors}
+							onProviderRegisterClick={this.handleProviderRegister}
+						/>
+					)}
 					<Menu
 						openRegister={this.handleOpenRegister}
 						openLogin={this.handleOpenLogin}
+						openProvider={this.handleOpenProvider}
 						user={this.props.user}
 						logout={this.handleLogout}
 					/>
@@ -166,6 +189,7 @@ export default connect<StateProps, DispatchProps, OwnProps>(
 interface OwnState {
 	openLogin: boolean
 	openRegister: boolean
+	openProviderRegister: boolean
 	loading: boolean
 	loginErrors: {
 		email?: string

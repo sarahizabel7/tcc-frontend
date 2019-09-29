@@ -7,12 +7,11 @@ export default () => {
 			<div className='showcase'>
 				<div className='row'>
 					<div className='col s12 m10 offset-m1 left'>
-						<h3 className='grey-text text-darken-4'>
+						<h3 className='white-text text-darken-4'>
 							O jeito fácil de contratar um serviço
 						</h3>
-						<h5 className='grey-text text-darken-4'>
-							Lorem ipsum dolor, sit amet consectetur adipisicing
-							elit.
+						<h5 className='white-text text-darken-4'>
+							Contrate com apenas alguns clicks!
 						</h5>
 						<br />
 						<br />

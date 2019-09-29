@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { Icon } from 'react-materialize'
 
 export default () => (
 	<footer className='page-footer indigo'>
@@ -6,10 +7,7 @@ export default () => (
 			<div className='row'>
 				<div className='col l6 s12'>
 					<h5 className='white-text'>About us</h5>
-					<p className='grey-text text-lighten-4'>
-						Lorem, ipsum dolor sit amet consectetur adipisicing
-						elit. Officia sit aliquid, illo eveniet dolorum eius?
-					</p>
+					
 				</div>
 				<div className='col l4 offset-l2 s12'>
 					<h5 className='white-text'>Links</h5>
@@ -21,6 +19,19 @@ export default () => (
 							>
 								Home
 							</a>
+							<span style={{
+								marginLeft: '5px'
+							}}>
+								<a href='https://facebook.com' style={aStyle} target="_blank">
+									<i className="fab fa-facebook"/>
+								</a>
+								<a href='https://instagram.com' style={aStyle} target="_blank">
+									<i className="fab fa-instagram"/>
+								</a>
+								<a href='https://linkedin.com' style={aStyle} target="_blank">
+									<i className="fab fa-linkedin"/>
+								</a>
+							</span>
 						</li>
 					</ul>
 				</div>
@@ -36,3 +47,9 @@ export default () => (
 		</div>
 	</footer>
 )
+
+const aStyle = {
+	marginLeft: '5px',
+	marginRight: '5px',
+	color: 'white'
+}

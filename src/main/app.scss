@@ -17,7 +17,7 @@
 	margin-bottom: 0;
 }
 .section-header .showcase {
-	background: url('../../public/assets/images/desenhando-teste2.png');
+	background: url('../../public/assets/images/preparingPaintingBig.jpg');
 	background-size: cover;
 	background-position: right;
 	z-index: 1;
@@ -117,7 +117,7 @@
 }
 
 .section-settings {
-	min-height: -webkit-fill-available;
+	min-height: 48em;
 }
 
 .brand-logo :hover {
@@ -264,4 +264,11 @@ input[type='number']:not(.browser-default):focus.invalid ~ label,
 input[type='search']:not(.browser-default):focus.invalid ~ label,
 textarea.materialize-textarea:focus.invalid ~ label {
 	color: #f44336 !important;
+}
+
+
+.close-button {
+	&:hover {
+		background-color: rgba(0,0,0,0.2)
+	}
 }

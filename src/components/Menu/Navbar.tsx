@@ -25,23 +25,23 @@ export default (props: OwnProps) => {
 									search
 								</i>
 							</label>
-							<i className='grey-text text-darken-3 material-icons'>
+							{/* <i className='grey-text text-darken-3 material-icons'>
 								close
-							</i>
+							</i> */}
 						</div>
 					</form>
 				</div>
 				<div className='s4'>
 					<ul className='hide-on-med-and-down'>
 						<li />
-						<li>
+						{ props.user.token && !props.user.isProvider && <li>
 							<a
 								className='grey-text text-darken-3'
-								href='#!index.html'
+								onClick={props.openProvider}
 							>
 								Torne-se um profissional
 							</a>
-						</li>
+						</li> }
 						{props.user.token ? (
 							<LoggedNavBar
 								logout={props.logout}
@@ -63,6 +63,7 @@ export default (props: OwnProps) => {
 interface OwnProps {
 	openRegister: () => void
 	openLogin: () => void
+	openProvider: () => void
 	user: RootReducerInterface['user']
 	logout: () => void
 }

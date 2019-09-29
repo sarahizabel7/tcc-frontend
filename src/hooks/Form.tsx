@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { string } from 'prop-types'
 const useState = React.useState
 
 export function useModal() {
@@ -30,3 +31,30 @@ export function useInput(initialValue: string) {
 		setError
 	}
 }
+
+
+export function useCpf(initialValue: string) {
+	const [value, setValue] = useState(initialValue)
+	const [error, setError] = useState('')
+	function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+		if(e.target.value.length < 15) {
+			setError('')
+			setValue(formataCPF(e.target.value))
+		}
+	}
+	return {
+		value,
+		onChange: handleChange,
+		error,
+		setError
+	} 
+}
+
+function formataCPF(cpf: string) {
+	//retira os caracteres indesejados...
+	cpf = cpf.replace(/[^\d]/g, "");
+  
+	//realizar a formatação...
+	  return cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4");
+}
+

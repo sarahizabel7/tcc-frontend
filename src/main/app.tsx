@@ -6,7 +6,7 @@ require('../../node_modules/@fortawesome/fontawesome-free/css/all.css')
 require('../../node_modules/material-icons/css/material-icons.min.css')
 require('../../node_modules/materialize-css/dist/css/materialize.min.css')
 require('../../node_modules/materialize-css/dist/js/materialize.min.js')
-require('./app.css')
+require('./app.scss')
 import Router from '../components/Routers/MainRouter'
 import { RootReducerInterface } from '../interfaces/reducersInterface'
 import { bindActionCreators } from 'redux'

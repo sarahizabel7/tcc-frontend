@@ -6,6 +6,26 @@ import { LoginInterface } from '../../interfaces/commonInterfaces'
 import { isEmail } from '../../utils/regex'
 import Input from '../../components/Input/Input'
 
+
+const btnStyle = {
+	position: 'absolute',
+	top: '25px',
+	right: '25px'
+}
+
+const header = ({modalClose}: {modalClose: () => void}) => (
+	<div>
+		<h4>Login</h4>
+		<div style={{
+			display: 'flex',
+			flexDirection: 'column',
+			alignItems: 'flex-end'
+		}}>
+			<Button flat onClick={modalClose} style={btnStyle} className='text-black close-button'>x</Button>
+		</div>
+	</div>
+)
+
 export default (props: OwnProps) => {
 	const email = useInput('')
 	const password = useInput('')
@@ -46,14 +66,15 @@ export default (props: OwnProps) => {
 		}
 		return Boolean(emailError) || Boolean(passError)
 	}
+	const { modalClose } = props
 	return (
 		<Modal
 			open={props.open}
 			actions={<div />}
 			className={'login-modal mini no-footer'}
-			header={'Login'}
+			header={header({modalClose})}
 			options={{
-				onCloseEnd: props.modalClose,
+				onCloseEnd: modalClose,
 				preventScrolling: true
 			}}
 		>
