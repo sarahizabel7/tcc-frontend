@@ -1,3 +1,5 @@
+import Provider from "../models/Provider";
+
 export interface RootReducerInterface {
 	user: UserReducer
 }
@@ -10,6 +12,7 @@ export interface UserReducer {
 	lastname?: string
 	loading?: boolean
 	avatar?: string
+	provider?: Provider
 	isProvider?: boolean
 }
 

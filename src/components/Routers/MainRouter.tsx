@@ -19,6 +19,7 @@ import { axiosInstance } from '../../utils/httpClient'
 import ApplicationRouter from './ApplicationRouter'
 import { RootReducerInterface } from '../../interfaces/reducersInterface'
 import { handleLoginError } from '../../utils/errors'
+import Provider from '../../models/Provider'
 
 class MainRouter extends React.Component<Props, State> {
 	constructor(props: Props) {
@@ -40,12 +41,26 @@ class MainRouter extends React.Component<Props, State> {
 			loggedIn(user)
 			await this.handleModalFinish()
 		} catch (e) {
-			console.log(e.response.data.data.error)
+			console.error(e.response.data.data.error)
 		}
 	}
 
 	handleProviderRegister = async (providerData: ProviderInterface) => {
-		console.log(providerData)
+		const { loggedIn, user } = this.props
+		const provider = new Provider()
+		const sendObj = {
+			...providerData,
+			provider
+		}
+		try {
+			this.setState({ loading: true })
+			const request = await axiosInstance.put(`user/${user.id}`, sendObj)
+			const userResponse = request.data.data
+			loggedIn(userResponse)
+			await this.handleModalFinish()
+		} catch (e) {
+			console.error(e.response.data.data.error)
+		}
 	}
 
 	handleModalFinish = async () => {
@@ -56,7 +71,8 @@ class MainRouter extends React.Component<Props, State> {
 		this.setState({
 			loading: false,
 			openLogin: false,
-			openRegister: false
+			openRegister: false,
+			openProviderRegister: false
 		})
 	}
 

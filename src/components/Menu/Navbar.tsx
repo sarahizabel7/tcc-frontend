@@ -34,7 +34,7 @@ export default (props: OwnProps) => {
 				<div className='s4'>
 					<ul className='hide-on-med-and-down'>
 						<li />
-						{ props.user.token && !props.user.isProvider && <li>
+						{ props.user.token && (!props.user.isProvider && !props.user.provider) && <li>
 							<a
 								className='grey-text text-darken-3'
 								onClick={props.openProvider}

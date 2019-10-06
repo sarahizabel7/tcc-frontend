@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Modal, Button, Row, Col, Icon } from 'react-materialize'
+import { Modal, Button, Row, Col, Icon, RadioGroup } from 'react-materialize'
 import { PulseLoader } from 'react-spinners'
 import { useInput, useCpf } from '../../hooks/Form'
 import { ProviderInterface, Gender } from '../../interfaces/commonInterfaces'
@@ -28,7 +28,7 @@ const header = ({handleClose}: {handleClose: () => void}) => (
 export default (props: OwnProps) => {
 	const cpf = useCpf('')
 	const phone = useInput('')
-	const [gender, setGender] = React.useState(Gender.male)
+	const [gender, setGender] = React.useState(Gender.Male)
     
 	const handleRegister = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault()
@@ -46,13 +46,20 @@ export default (props: OwnProps) => {
 	const hasError = () => {
 		let phoneError,
 			cpfError
-			
-		if (phone.value.length < 10) {
+		if (phone.value.length > 12) {
 			phoneError = 'Telefone inválido'
+			phone.setError(phoneError)
+		}
+		if (!phone.value) {
+			phoneError = 'Telefone é requerido'
 			phone.setError(phoneError)
 		}
 		if (!cpf.value) {
 			cpfError = 'Cpf é requerido'
+			cpf.setError(cpfError)
+		}
+		if (cpf.value && cpf.value.length !== 14) {
+			cpfError = 'Cpf inválido'
 			cpf.setError(cpfError)
 		}
 		return (
@@ -60,6 +67,25 @@ export default (props: OwnProps) => {
 			Boolean(cpfError)
 		)
 	}
+
+	const onChangeGender = (event: React.ChangeEvent) => {
+		setGender((event.target as any).value)
+	}
+
+	const genderOptions = [
+		{label: 'Masculino', value: Gender.Male},
+		{label: 'Feminino', value: Gender.Female}
+	]
+
+	const genderContainer: React.CSSProperties = {
+		display: 'flex',
+		marginBottom: '1em',
+		alignItems: 'center',
+		float: 'left',
+		justifyContent: 'space-around',
+		width: '100%'
+	}
+
 	return (
 		<Modal
 			open={props.open}
@@ -73,8 +99,19 @@ export default (props: OwnProps) => {
 			<Row>
 				<form onSubmit={handleRegister}>
 					<Input s='12' label='CPF' {...cpf} />
-					<Input s='12' label='Telefone' {...phone} />
-					{/* <Input s='12' label='Sexo' {...gender} /> */}
+					<Input s='12' maxLength={12} label='Telefone' {...phone} />
+					<div style={genderContainer}>
+						<label>Sexo:</label>
+						<RadioGroup
+							radioClassNames='genderRadios'
+							name="size"
+							withGap={true}
+							value={gender}
+							label="Sexo"
+							onChange={onChangeGender}
+							options={genderOptions}
+						/>
+					</div>
 					{!props.loading ? (
 						<Button className={'fluid indigo'} s={12}>
 							Virar Prestador de serviços!
