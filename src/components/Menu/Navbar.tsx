@@ -1,11 +1,21 @@
-import * as React from 'react'
-import { TextInput } from 'react-materialize'
-import Brand from '../Logo/Logo'
-import { RootReducerInterface } from '../../interfaces/reducersInterface'
-import LoggedNavBar from './LoggedNavBar'
-import NotLoggedNavBar from './NotLoggedNavBar'
+import * as React from 'react';
+
+import { RootReducerInterface } from '../../interfaces/reducersInterface';
+import { history } from '../../main/history';
+import Brand from '../Logo/Logo';
+import LoggedNavBar from './LoggedNavBar';
+import NotLoggedNavBar from './NotLoggedNavBar';
 
 export default (props: OwnProps) => {
+	const [search, setSearch] = React.useState('')
+
+	const handleSearch = () => {
+		const searchObject = {
+			pathname: `/search:${search}`,
+		}
+		history.push(searchObject)
+	}
+
 	return (
 		<React.Fragment>
 			<div className='row'>
@@ -13,12 +23,13 @@ export default (props: OwnProps) => {
 					<Brand />
 				</div>
 				<div className='col s6'>
-					<form>
+					<form onSubmit={handleSearch}>
 						<div className='input-field'>
 							<input
 								id='search'
 								type='search'
 								className='grey-text text-darken-3'
+								onChange={(event: React.ChangeEvent<HTMLInputElement>) => setSearch(event.target.value)}
 							/>
 							<label className='label-icon' htmlFor='search'>
 								<i className='grey-text text-darken-3 material-icons'>

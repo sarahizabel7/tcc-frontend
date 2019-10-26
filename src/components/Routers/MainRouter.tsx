@@ -1,25 +1,22 @@
-import * as React from 'react'
-import { Route, Router, Redirect } from 'react-router'
-import { Switch } from 'react-router-dom'
-import { history } from '../../main/history'
-import { bindActionCreators } from 'redux'
-import { loggedIn, loggedOut } from '../../redux/actionCreators/userActions'
-import { connect } from 'react-redux'
-import Menu from '../../components/Menu/Menu'
-import Footer from '../../components/Footer/Footer'
-import RegisterModal from '../Modal/RegisterModal'
-import LoginModal from '../Modal/LoginModal'
-import ProviderModal from '../Modal/ProviderModal'
-import {
-	RegisterInterface,
-	LoginInterface,
-	ProviderInterface
-} from '../../interfaces/commonInterfaces'
-import { axiosInstance } from '../../utils/httpClient'
-import ApplicationRouter from './ApplicationRouter'
-import { RootReducerInterface } from '../../interfaces/reducersInterface'
-import { handleLoginError } from '../../utils/errors'
-import Provider from '../../models/Provider'
+import * as React from 'react';
+import { connect } from 'react-redux';
+import { Redirect, Route, Router } from 'react-router';
+import { Switch } from 'react-router-dom';
+import { bindActionCreators } from 'redux';
+
+import Footer from '../../components/Footer/Footer';
+import Menu from '../../components/Menu/Menu';
+import { LoginInterface, ProviderInterface, RegisterInterface } from '../../interfaces/commonInterfaces';
+import { RootReducerInterface } from '../../interfaces/reducersInterface';
+import { history } from '../../main/history';
+import Provider from '../../models/Provider';
+import { loggedIn, loggedOut } from '../../redux/actionCreators/userActions';
+import { handleLoginError } from '../../utils/errors';
+import { axiosInstance } from '../../utils/httpClient';
+import LoginModal from '../Modal/LoginModal';
+import ProviderModal from '../Modal/ProviderModal';
+import RegisterModal from '../Modal/RegisterModal';
+import ApplicationRouter from './ApplicationRouter';
 
 class MainRouter extends React.Component<Props, State> {
 	constructor(props: Props) {
@@ -85,7 +82,7 @@ class MainRouter extends React.Component<Props, State> {
 			loggedIn(user)
 			this.handleModalFinish()
 		} catch (e) {
-			const errStr = e.response.data.data.error
+			const errStr = e.response.data && e.response.data.data.error || e.response.data.error || 'erro'
 			this.setState({
 				loading: false,
 				loginErrors: handleLoginError(errStr)

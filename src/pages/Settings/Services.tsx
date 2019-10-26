@@ -22,12 +22,12 @@ export default (props: Props) => {
 
   return (
     <div>
-      <ServiceModal
+      { serviceModalOpen && <ServiceModal
         open={serviceModalOpen}
         onServiceRegisterClick={handleAddService}
         loading={loading}
         modalClose={handleServiceModalOpen(false)}
-      />
+      /> }
       <h5 style={{ marginBottom: "30px" }}>Meus serviços</h5>
       <div>
         <Button
@@ -45,7 +45,39 @@ export default (props: Props) => {
           <tbody>
             <tr>
               <td>Formatação PC</td>
-              <td>R$ 50,00 (valor fechado)</td>
+              <td>R$ 80,00 (valor fechado)</td>
+              <td>
+                <Icon>edit</Icon>
+                <Icon>delete</Icon>
+              </td>
+            </tr>
+            <tr>
+              <td>Limpeza PC</td>
+              <td>R$ 40,00 (valor fechado)</td>
+              <td>
+                <Icon>edit</Icon>
+                <Icon>delete</Icon>
+              </td>
+            </tr>
+            <tr>
+              <td>Backup PC</td>
+              <td>R$ 30,00 (valor fechado)</td>
+              <td>
+                <Icon>edit</Icon>
+                <Icon>delete</Icon>
+              </td>
+            </tr>
+            <tr>
+              <td>Montar PC</td>
+              <td>R$ 110,00 (valor fechado)</td>
+              <td>
+                <Icon>edit</Icon>
+                <Icon>delete</Icon>
+              </td>
+            </tr>
+            <tr>
+              <td>Avaliação PC</td>
+              <td>Orçamento</td>
               <td>
                 <Icon>edit</Icon>
                 <Icon>delete</Icon>

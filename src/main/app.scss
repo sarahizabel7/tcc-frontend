@@ -50,6 +50,7 @@
 	top: 25% !important;
 }
 .register-modal {
+	overflow-y: auto !important;
 	top: 15% !important;
 }
 
@@ -275,4 +276,14 @@ textarea.materialize-textarea:focus.invalid ~ label {
 
 .genderRadios {
 	margin-left: 1.4em
+}
+
+.modal-content {
+	.dropdown-content {
+		position: unset;
+	}
+}
+
+.card-stacked {
+	overflow: auto;
 }
