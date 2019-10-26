@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Button, Row, Col, TextInput, Icon } from 'react-materialize'
+import { Button, Row, Col } from 'react-materialize'
 import Input from '../../components/Input/Input'
 import { PulseLoader } from 'react-spinners'
 import { RootReducerInterface } from '../../interfaces/reducersInterface'
