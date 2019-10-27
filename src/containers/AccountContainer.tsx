@@ -1,10 +1,12 @@
-import * as React from 'react'
-import { bindActionCreators } from 'redux'
-import { connect } from 'react-redux'
-import { RootReducerInterface } from '../interfaces/reducersInterface'
-import Account from '../pages/Settings/FunctionAccount'
-import { updateUser } from '../redux/actionCreators/userActions'
-import { axiosInstance } from '../utils/httpClient'
+import * as React from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
+import { RootReducerInterface } from '../interfaces/reducersInterface';
+import Account from '../pages/Settings/FunctionAccount';
+import { updateUser } from '../redux/actionCreators/userActions';
+import { axiosInstance } from '../utils/httpClient';
+
 
 class AccountContainer extends React.Component<Props, State> {
 	state = {
@@ -18,28 +20,50 @@ class AccountContainer extends React.Component<Props, State> {
 			lastname: ''
 		}
 	}
+
 	handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		this.setState({
 			...this.state,
 			user: { ...this.state.user, [e.target.name]: e.target.value }
 		})
 	}
+
+	handleAvatarChange = (avatar: string) => {
+		this.setState({
+			...this.state,
+			user: {
+				...this.state.user,
+				avatar
+			}
+		})
+	} 
+
 	handleUpdate = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault()
 		try {
 			this.setLoading(true)
-			const { name, lastname, email } = this.state.user
+			const { name, lastname, email, avatar } = this.state.user
+
 			let request = await axiosInstance.put(
 				`/user/${this.state.user.id}`,
 				{
 					name,
+					avatar,
 					lastname,
 					email
+				}, {
+					headers: {
+						'Content-Type': 'base64',
+					}
 				}
 			)
+			console.log(request.data.data)
 			this.props.updateUser(request.data.data)
 		} catch (e) {
-			this.handleError(e.response.data.data.error)
+			if (e.response && e.response.data.data.error) {
+				this.handleError(e.response.data.data.error)
+			}
+			console.error(e)
 		} finally {
 			this.setLoading(false)
 		}
@@ -72,6 +96,7 @@ class AccountContainer extends React.Component<Props, State> {
 				user={user}
 				handleChange={this.handleChange}
 				handleUpdate={this.handleUpdate}
+				handleAvatarChange={this.handleAvatarChange}
 				loading={loading}
 				errors={errors}
 			/>

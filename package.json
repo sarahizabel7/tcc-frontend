@@ -80,5 +80,7 @@
     "webpack-merge": "^4.2.1",
     "webpack-pwa-manifest": "^4.0.0"
   },
-  "dependencies": {}
+  "dependencies": {
+    "lzutf8": "^0.5.5"
+  }
 }

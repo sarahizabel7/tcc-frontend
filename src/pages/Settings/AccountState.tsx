@@ -1,9 +1,9 @@
-import * as React from 'react'
-import { Button, Row, Col, TextInput, Icon } from 'react-materialize'
-import Input from '../../components/Input/Input'
+import * as React from 'react';
+import { Button, Col, Row } from 'react-materialize';
+import { PulseLoader } from 'react-spinners';
 
-import { axiosInstance } from '../../utils/httpClient'
-import { PulseLoader } from 'react-spinners'
+import Input from '../../components/Input/Input';
+import { axiosInstance } from '../../utils/httpClient';
 
 export default class AccountState extends React.Component<Props, State> {
 	state: State = {
@@ -18,17 +18,20 @@ export default class AccountState extends React.Component<Props, State> {
 			lastname: ''
 		}
 	}
+
 	handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		this.setState({
 			...this.state,
 			[e.target.name]: e.target.value
 		})
 	}
+
 	async componentDidMount() {
 		try {
 			let request = await axiosInstance.get(
 				'/user/5c965d1e0203772b687a7ecb'
 			)
+			console.log(request.data.data)
 			const { email, lastname, name } = request.data.data
 			this.setState({
 				name,
@@ -39,6 +42,7 @@ export default class AccountState extends React.Component<Props, State> {
 			console.error(e)
 		}
 	}
+
 	handleUpdate = async (e: React.FormEvent<HTMLFormElement>) => {
 		try {
 			e.preventDefault()
@@ -58,11 +62,13 @@ export default class AccountState extends React.Component<Props, State> {
 			this.setLoading(false)
 		}
 	}
+
 	setLoading = (isLoading: boolean) => {
 		this.setState({
 			loading: isLoading
 		})
 	}
+
 	handleError = (e: any) => {
 		console.log('handleErrrorr', e.response.data.data.error)
 		switch (e.response.data.data.error) {
@@ -77,13 +83,16 @@ export default class AccountState extends React.Component<Props, State> {
 			}
 		}
 	}
+
 	render() {
 		const { name, lastname, password, email, loading, errors } = this.state
+
 		return (
 			<div>
 				<h5 style={{ marginBottom: '30px' }}>Meus dados</h5>
 
 				<h6 style={{ marginBottom: '20px' }}>Dados da conta</h6>
+				
 				<form onSubmit={this.handleUpdate}>
 					<Row>
 						<Input

@@ -287,3 +287,11 @@ textarea.materialize-textarea:focus.invalid ~ label {
 .card-stacked {
 	overflow: auto;
 }
+
+.selectFile {
+	height: fit-content;
+	&:hover  {
+		color: blue;
+		cursor: pointer;
+	}
+}

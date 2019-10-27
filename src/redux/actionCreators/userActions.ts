@@ -1,7 +1,8 @@
-import { Dispatch } from 'redux'
-import { history } from '../../main/history'
-import { axiosInstance } from '../../utils/httpClient'
-import { UserReducer } from '../../interfaces/reducersInterface'
+import { Dispatch } from 'redux';
+
+import { UserReducer } from '../../interfaces/reducersInterface';
+import { history } from '../../main/history';
+import { axiosInstance } from '../../utils/httpClient';
 
 export const loggedIn = async (user: UserReducer) => {
 	return async (dispatch: Dispatch<any>) => {
@@ -23,9 +24,9 @@ export const loggedOut = () => {
 			dispatch({
 				type: 'SET_LOADING_STATE'
 			})
-			const logout = await axiosInstance.post('logout')
+			await axiosInstance.post('logout')
 		} catch (e) {
-			console.log(e)
+			console.error(e)
 		} finally {
 			localStorage.removeItem('user')
 			delete (axiosInstance as any).defaults.headers.common[
