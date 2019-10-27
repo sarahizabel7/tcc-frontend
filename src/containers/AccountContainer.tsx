@@ -33,9 +33,9 @@ class AccountContainer extends React.Component<Props, State> {
 			...this.state,
 			user: {
 				...this.state.user,
-				avatar
+				avatar: avatar
 			}
-		})
+		}, () => {console.log(this.state)})
 	} 
 
 	handleUpdate = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -51,13 +51,8 @@ class AccountContainer extends React.Component<Props, State> {
 					avatar,
 					lastname,
 					email
-				}, {
-					headers: {
-						'Content-Type': 'base64',
-					}
 				}
 			)
-			console.log(request.data.data)
 			this.props.updateUser(request.data.data)
 		} catch (e) {
 			if (e.response && e.response.data.data.error) {

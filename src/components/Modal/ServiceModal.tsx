@@ -63,30 +63,6 @@ export default (props: OwnProps) => {
   const handleClose = () => {
     props.modalClose();
   };
-  // const hasError = () => {
-  // 	let phoneError,
-  // 		cpfError
-  // 	if (phone.value.length > 12) {
-  // 		phoneError = 'Telefone inválido'
-  // 		phone.setError(phoneError)
-  // 	}
-  // 	if (!phone.value) {
-  // 		phoneError = 'Telefone é requerido'
-  // 		phone.setError(phoneError)
-  // 	}
-  // 	if (!cpf.value) {
-  // 		cpfError = 'Cpf é requerido'
-  // 		cpf.setError(cpfError)
-  // 	}
-  // 	if (cpf.value && cpf.value.length !== 14) {
-  // 		cpfError = 'Cpf inválido'
-  // 		cpf.setError(cpfError)
-  // 	}
-  // 	return (
-  // 		Boolean(phoneError) ||
-  // 		Boolean(cpfError)
-  // 	)
-  // }
 
   const changeEstimate = (e: React.ChangeEvent) => {
     setEstimate((e.target as any).value);

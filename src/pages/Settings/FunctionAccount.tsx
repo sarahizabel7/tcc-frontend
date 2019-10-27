@@ -29,19 +29,29 @@ const FunctionAccount = (props: Props) => {
 		avatar: userAvatar
 	} = user
 
-	console.log(user)
 	
 	const decompressedAvatar = userAvatar ? LZUTF8.decompress(userAvatar, {
-		inputEncoding: 'Base64'
+		inputEncoding: 'StorageBinaryString'
 	}) : 'http://www.auctus.com.br/wp-content/uploads/2017/09/sem-imagem-avatar.png'
-	const [avatar, setAvatar] = React.useState(decompressedAvatar)
+	console.log({decompressedAvatar, userAvatar})
+	const [avatar, setAvatar] = React.useState(userAvatar)
+
+	
+	// React.useEffect(() => {
+	// 	if(user.avatar) {
+	// 		const decompressedAvatar = LZUTF8.decompress(user.avatar, {
+	// 			inputEncoding: 'Base64'
+	// 		})		
+	// 		setAvatar(de)
+	// 	}
+	// }, [user, user.avatar])
 
 	const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
 		try {
 			const imageUrl = ((event.target as any).files[0])
 			const imageBase64 = await toBase64(imageUrl) as string
-			const compressedAvatar = LZUTF8.compress(avatar, {
-				outputEncoding: 'Base64'
+			const compressedAvatar = LZUTF8.compress(imageBase64, {
+				outputEncoding: 'StorageBinaryString'
 			});
 			setAvatar(imageBase64)
 			handleAvatarChange(compressedAvatar)

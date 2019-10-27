@@ -1,5 +1,13 @@
 import * as React from 'react';
 import { Card, Col, Row } from 'react-materialize';
+import { PulseLoader } from 'react-spinners';
+
+import ProviderInfoModal from '../components/Modal/ProviderInfoModal';
+import { axiosInstance } from '../utils/httpClient';
+
+interface SearchContainerProps {
+    searchedText: string
+}
 
 const containerStyle: React.CSSProperties = {
     padding: '3em 4em',
@@ -10,11 +18,13 @@ const containerStyle: React.CSSProperties = {
 
 const searchResultStyle: React.CSSProperties = {
     flex: '1 0',
-    paddingTop: '1em'
+    paddingTop: '1em',
+    width: '100%'
 }
 
-const handleClick = () => {
-    
+const aStyle: React.CSSProperties = {
+    cursor: 'pointer',
+    fontSize: '14px'
 }
 
 const CardImage = (imageSrc: string | {} ) => {
@@ -31,18 +41,7 @@ const CardImage = (imageSrc: string | {} ) => {
     )
 }
 
-const CardActions = () => {
-    const aStyle: React.CSSProperties = {
-        cursor: 'pointer',
-        fontSize: '14px'
-    }
-    
-    return (
-        <a style={aStyle} onClick={handleClick}>Contratar</a>
-    )
-}
-
-const CardContent = (name: string, description?: string) => {
+const CardContent = (name: string, lastName: string, description?: string) => {
     const cardContentStyle: React.CSSProperties = {
         maxWidth: '100%',
         maxHeight: '125px',
@@ -63,8 +62,24 @@ const CardContent = (name: string, description?: string) => {
 
     return (
         <div style={cardContentStyle}>
-            <h4 style={titleStyle}>{name}</h4>
+            <h4 style={titleStyle}>{name} {lastName}</h4>
             <div style={divStyle} title={description}>{description}</div>
+        </div>
+    )
+}
+
+const loader = () => {
+    const loaderStyle: React.CSSProperties = {
+        height: '100%',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingBottom: '100px'
+    }
+
+    return (
+        <div style={loaderStyle}>
+            <PulseLoader color='#3F51B5' loading={true} />
         </div>
     )
 }
@@ -73,53 +88,76 @@ const cardStyle: React.CSSProperties = {
     height: '180px',
 }
 
-const SearchContainer = () => {
-    return (
-        <div style={containerStyle}>
-            <h4>Resultados da busca:</h4>
+const SearchContainer = ({searchedText}: SearchContainerProps) => {
+    const [providedServices, setProvidedServices] = React.useState([])
+    const [isLoading, setLoading] = React.useState(false)
+    const [isModalOpen, setModalOpen] = React.useState(false)
+    const [selectedProvider, setSelectedProvider] = React.useState(null)
+
+
+    React.useEffect(() => {
+        const fetchData = async () => {
+            try {
+                setLoading(true)
+                const request = await axiosInstance.get(`search-services/${searchedText}`)
+                setProvidedServices(request.data.data)
+            } catch(e) {
+                const error = e.response.data.data.error
+                if (error === 'Users not found.') {
+                    setProvidedServices([])
+                }
+            } finally {
+                setLoading(false)
+            }
+        }
+        fetchData()
+    }, [])
+
+    const handleClickContractClick = (providerInfo: any) => {
+        return () => {
+            setModalOpen(true)
+            setSelectedProvider(providerInfo)
+        }
+    }
+
+    const handleModalClose = () => {
+        setModalOpen(false)
+        setSelectedProvider(null)
+    }
+
+    const getCards = () => {
+        const providerCards = providedServices.map((providerInfo, index) => {
+            const description = providerInfo.description || 'Sem descrição disponível'
+            return (
+                <Col  l={4} m={6} s={12} key={index}>
+                    <Card style={cardStyle} horizontal key={providerInfo.id}
+                        header={CardImage(providerInfo.avatar)}
+                        actions={[<a style={aStyle} onClick={handleClickContractClick(providerInfo)}>Contratar</a>]}
+                    >
+                        {CardContent(providerInfo.name, providerInfo.lastname, description)}
+                    </Card>
+                </Col>
+            )
+        })
+
+        return (
             <Row style={searchResultStyle}>
-                <Col  l={4} m={6} s={12}>
-                    <Card style={cardStyle} horizontal header={<CardImage />} actions={[<CardActions/>]}>
-                        {CardContent('André dos Santos', 'Mestre de obras há 14 anos')}
-                    </Card>
-                </Col>
-                <Col  l={4} m={6} s={12}>
-                    <Card style={cardStyle} horizontal header={CardImage(`https://images.pexels.com/photos/791157/pexels-photo-791157.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=180&w=200`)} actions={[<CardActions/>]}>
-                        {CardContent('Fernanda Faria', 'Manicure profissional')}
-                    </Card>
-                </Col>
-                <Col  l={4} m={6} s={12}>
-                    <Card style={cardStyle} horizontal header={CardImage(`https://images.pexels.com/photos/975668/pexels-photo-975668.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=180&w=200`)} actions={[<CardActions/>]}>
-                        {CardContent('Kátia', 'Oculista a domicílio')}
-                    </Card>
-                </Col>
-                <Col  l={4} m={6} s={12}>
-                    <Card style={cardStyle} horizontal header={CardImage(`https://images.pexels.com/photos/50711/board-electronics-computer-data-processing-50711.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=180&w=200`)} actions={[<CardActions/>]}>
-                        {CardContent('Marcos Martins', 'Formatação e Limpeza de computadores')}
-                    </Card>
-                </Col>
-                <Col  l={4} m={6} s={12}>
-                    <Card style={cardStyle} horizontal header={CardImage(`https://images.pexels.com/photos/2624776/pexels-photo-2624776.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=180&w=200`)} actions={[<CardActions/>]}>
-                        {CardContent('Jorge Tatto', 'Tatuador focado em traços realistastttttttttttttttttttttttttttttttttttttttttttttttttttt')}
-                    </Card>
-                </Col>
-                <Col  l={4} m={6} s={12}>
-                    <Card style={cardStyle} horizontal header={CardImage(`https://images.pexels.com/photos/2801980/pexels-photo-2801980.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=180&w=200`)} actions={[<CardActions/>]}>
-                        {CardContent('Maria dos Donuts', 'Donuts e doces sob encomenda')}
-                    </Card>
-                </Col>
-                <Col  l={4} m={6} s={12}>
-                    <Card style={cardStyle} horizontal header={CardImage(`https://images.pexels.com/photos/1264210/pexels-photo-1264210.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=180&w=200`)} actions={[<CardActions/>]}>
-                        {CardContent('Marta Machado', 'Fotógrafa especialista em fotos de casamento')}
-                    </Card>
-                </Col>
-                <Col  l={4} m={6} s={12}>
-                    <Card style={cardStyle} horizontal header={CardImage(`https://images.pexels.com/photos/48889/cleaning-washing-cleanup-the-ilo-48889.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=180&w=200`)} actions={[<CardActions/>]}>
-                        {CardContent('Jennifer Faxinas', 'Diarista profissional há 12 anos')}
-                    </Card>
-                </Col>
+                {providerCards}
             </Row>
-        </div>
+        )
+    }
+
+    const cards = providedServices.length > 0 ? getCards() : 'Não há serviços disponíveis 😥'
+    const content = isLoading ? loader() : cards
+
+    return (
+        <>
+            { isModalOpen && <ProviderInfoModal open={isModalOpen} modalClose={handleModalClose} providerInfo={selectedProvider} /> }
+            <div style={containerStyle}>
+                <h4>Resultados da busca:</h4>
+                    {content}
+            </div>
+        </>
     )
 }
 

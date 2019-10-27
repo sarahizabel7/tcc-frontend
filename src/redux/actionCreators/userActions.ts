@@ -7,7 +7,6 @@ import { axiosInstance } from '../../utils/httpClient';
 export const loggedIn = async (user: UserReducer) => {
 	return async (dispatch: Dispatch<any>) => {
 		localStorage.setItem('user', JSON.stringify(user))
-		console.log(user)
 		axiosInstance.defaults.headers.common['Authorization'] = `Token ${
 			user.token
 		}`

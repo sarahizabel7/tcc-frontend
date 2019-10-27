@@ -11,7 +11,7 @@ export default (props: OwnProps) => {
 
 	const handleSearch = () => {
 		const searchObject = {
-			pathname: `/search:${search}`,
+			pathname: `/search/${search}`,
 		}
 		history.push(searchObject)
 	}

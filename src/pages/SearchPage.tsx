@@ -7,9 +7,13 @@ const containerStyle: React.CSSProperties = {
     minHeight: 'calc(100vh - 249px)'
 }
 
-const SearchPage = () => (
+interface SearchPageProps {
+    searchedText: string
+}
+
+const SearchPage = ({searchedText}: SearchPageProps) => (
     <div style={containerStyle}>
-        <SearchContainer/>
+        <SearchContainer searchedText={searchedText}/>
     </div>
 )
 

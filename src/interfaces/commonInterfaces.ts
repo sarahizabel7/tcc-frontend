@@ -60,3 +60,10 @@ export interface Rating {
   grade: Grade;
   comment: string;
 }
+
+export const getChargingMethodTranslation = (charging_method: ChargingMethods) => {
+  switch(charging_method) {
+    case ChargingMethods.PerHour: return 'Por hora';
+    case ChargingMethods.CloseService: return 'Serviço fechado'
+  }
+}

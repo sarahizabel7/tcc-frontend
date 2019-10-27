@@ -6,6 +6,4 @@ const axiosInstance = axios.create({
 	timeout: 20000
 })
 
-axiosInstance.defaults.headers.post['Content-Type'] ='application/x-www-form-urlencoded';
-
 export {axiosInstance}
