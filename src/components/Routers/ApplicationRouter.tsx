@@ -12,7 +12,8 @@ export default (props: Props) => {
 		<Switch>
 			<Route path='/' exact={true} render={() => <MainPage />} />
 			{token && <Route path='/settings' render={() => <Settings />} />}
-			{token && <Route path='/search/:search' render={({match}) => <Search searchedText={match.params.search}/>} />}
+			<Route path='/search/:search' render={({match}) => <Search searchedText={match.params.search}/>} />
+			<Route path='/search/' render={({match}) => <Search searchedText={match.params.search}/>} />
 		</Switch>
 	)
 }

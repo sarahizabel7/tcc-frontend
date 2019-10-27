@@ -13,7 +13,7 @@ export default (props: OwnProps) => {
 		const searchObject = {
 			pathname: `/search/${search}`,
 		}
-		history.push(searchObject)
+		history.replace(searchObject)
 	}
 
 	return (
