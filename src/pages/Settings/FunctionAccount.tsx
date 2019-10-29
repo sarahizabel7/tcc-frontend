@@ -33,7 +33,6 @@ const FunctionAccount = (props: Props) => {
 	const decompressedAvatar = userAvatar ? LZUTF8.decompress(userAvatar, {
 		inputEncoding: 'StorageBinaryString'
 	}) : 'http://www.auctus.com.br/wp-content/uploads/2017/09/sem-imagem-avatar.png'
-	console.log({decompressedAvatar, userAvatar})
 	const [avatar, setAvatar] = React.useState(userAvatar)
 
 	

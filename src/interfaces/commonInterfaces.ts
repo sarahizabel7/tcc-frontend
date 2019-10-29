@@ -44,11 +44,13 @@ export interface ProviderInterface {
 }
 
 export interface Service {
+  _id?: string;
   name: string;
   description: string;
 }
 
 export interface ProvidedService {
+  _id?: string,
   service: Service;
   price?: number;
   estimate: boolean;

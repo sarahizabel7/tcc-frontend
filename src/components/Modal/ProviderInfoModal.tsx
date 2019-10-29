@@ -89,9 +89,10 @@ const header = ({ handleClose }: { handleClose: () => void }) => (
 const getProvidedServices = (provided_services: ProvidedService[]) => {
     const listStyle: React.CSSProperties = {
         overflowY: 'auto',
-        height: 'fit-content',
+        height: 'auto',
         maxHeight: 'calc(100% - 1em)',
         width: '100%',
+        backgroundColor: '#FFFFFF'
     }
     
     return (

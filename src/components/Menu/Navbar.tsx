@@ -28,6 +28,7 @@ export default (props: OwnProps) => {
 							<input
 								id='search'
 								type='search'
+								placeholder='Pesquisar'
 								className='grey-text text-darken-3'
 								onChange={(event: React.ChangeEvent<HTMLInputElement>) => setSearch(event.target.value)}
 							/>

@@ -2,102 +2,119 @@ import * as React from 'react';
 import { Button, Icon, Table } from 'react-materialize';
 
 import ServiceModal from '../../components/Modal/ServiceModal';
-import { ProvidedService } from '../../interfaces/commonInterfaces';
+import { getChargingMethodTranslation, ProvidedService } from '../../interfaces/commonInterfaces';
+import { RootReducerInterface } from '../../interfaces/reducersInterface';
 
-export default (props: Props) => {
-  const tableHeader = getHeader();
+const Services = ({
+	user,
+	loading
+}: Props) => {
+	const tableHeader = getHeader();
 
-  const [serviceModalOpen, setServiceModalOpen] = React.useState(false);
-  const [loading, setLoading] = React.useState(false);
+	const [serviceModalOpen, setServiceModalOpen] = React.useState(false);
+	const [selectedService, setSelectedService] = React.useState<ProvidedService>(null)
 
-  const handleAddService = (service: ProvidedService) => {
-    console.log(service);
-  };
+	const handleAddService = (service: ProvidedService) => {
+		console.log(service);
 
-  const handleServiceModalOpen = (open: boolean) => {
-    return () => {
-      setServiceModalOpen(open);
-    };
-  };
+		const findIfExists = user.provider.provided_services.find(({_id}) => {
+			return service._id === _id
+		})
+		
+		console.log(findIfExists)
 
-  return (
-    <div>
-      { serviceModalOpen && <ServiceModal
-        open={serviceModalOpen}
-        onServiceRegisterClick={handleAddService}
-        loading={loading}
-        modalClose={handleServiceModalOpen(false)}
-      /> }
-      <h5 style={{ marginBottom: "30px" }}>Meus serviços</h5>
-      <div>
-        <Button
-          waves="light"
-          className={"indigo"}
-          s={12}
-          onClick={handleServiceModalOpen(true)}
-        >
-          Novo serviço
+	};
+
+	const handleEdit = (service: ProvidedService) => {
+		return () => {
+			setSelectedService(service)
+			setServiceModalOpen(true)
+		}
+	};
+
+	const handleDelete = (service: ProvidedService) => {
+		return () => {
+			const deletedService = user.provider.provided_services.filter(({_id}) => {
+				_id !== service._id
+			}) 
+			console.log('newList', deletedService)
+		}
+	};
+
+	const handleServiceModalOpen = (open: boolean) => {
+		return () => {
+			if(!open) {
+				setSelectedService(null)
+			}
+			setServiceModalOpen(open);
+		};
+	};
+
+	const renderServices = () => {
+		return user.provider.provided_services.map((providedService, idx) => {
+			const { estimate, charging_method, price, service } = providedService
+			const priceString = estimate ? 'Orçamento' : `R$ ${price.toFixed(2)} (${getChargingMethodTranslation(charging_method)})`
+
+			return (
+				<tr key={idx}>
+					<td>{service.name}</td>
+					<td>{priceString}</td>
+					<td>
+						<a onClick={handleEdit(providedService)}><Icon className='servicesIcon'>edit</Icon></a>
+						<a onClick={handleDelete(providedService)}><Icon className='servicesIcon'>delete</Icon></a>
+					</td>
+				</tr>
+			)
+		}) 
+	}
+
+	return (
+		<div>
+			{ serviceModalOpen &&
+				<ServiceModal
+					open={ serviceModalOpen }
+					onServiceRegisterClick={ handleAddService }
+					providedService={selectedService}
+					loading={ loading }
+					modalClose={ handleServiceModalOpen(false) }
+				/> }
+			<h5 style={ { marginBottom: "30px" } }>Meus serviços</h5>
+			<div>
+				<Button
+					waves="light"
+					className={ "indigo" }
+					s={ 12 }
+					onClick={ handleServiceModalOpen(true) }
+				>
+					Novo serviço
         </Button>
-      </div>
-      <div>
-        <Table>
-          {tableHeader}
-          <tbody>
-            <tr>
-              <td>Formatação PC</td>
-              <td>R$ 80,00 (valor fechado)</td>
-              <td>
-                <Icon>edit</Icon>
-                <Icon>delete</Icon>
-              </td>
-            </tr>
-            <tr>
-              <td>Limpeza PC</td>
-              <td>R$ 40,00 (valor fechado)</td>
-              <td>
-                <Icon>edit</Icon>
-                <Icon>delete</Icon>
-              </td>
-            </tr>
-            <tr>
-              <td>Backup PC</td>
-              <td>R$ 30,00 (valor fechado)</td>
-              <td>
-                <Icon>edit</Icon>
-                <Icon>delete</Icon>
-              </td>
-            </tr>
-            <tr>
-              <td>Montar PC</td>
-              <td>R$ 110,00 (valor fechado)</td>
-              <td>
-                <Icon>edit</Icon>
-                <Icon>delete</Icon>
-              </td>
-            </tr>
-            <tr>
-              <td>Avaliação PC</td>
-              <td>Orçamento</td>
-              <td>
-                <Icon>edit</Icon>
-                <Icon>delete</Icon>
-              </td>
-            </tr>
-          </tbody>
-        </Table>
-      </div>
-    </div>
-  );
+			</div>
+			<div>
+				<Table>
+					{ tableHeader }
+					<tbody>
+						{renderServices()}
+					</tbody>
+				</Table>
+			</div>
+		</div>
+	);
 };
 
 const getHeader = () => (
-  <thead>
-    <tr>
-      <th data-field="id">Nome</th>
-      <th data-field="name">Preço</th>
-      <th data-field="price">Ações</th>
-    </tr>
-  </thead>
+	<thead>
+		<tr>
+			<th data-field="id">Nome</th>
+			<th data-field="name">Preço</th>
+			<th data-field="price">Ações</th>
+		</tr>
+	</thead>
 );
 
-interface Props {}
+interface Props {
+	loading: boolean
+	user: RootReducerInterface['user'],
+	handleServicesUpdate: (providedServices: ProvidedService[]) => void
+}
+
+export default Services

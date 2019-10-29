@@ -299,3 +299,12 @@ textarea.materialize-textarea:focus.invalid ~ label {
 .custom-chip {
 	margin: 8px 3px 0 2px !important
 }
+
+.servicesIcon {
+	cursor: pointer;
+	color: black;
+	
+	&:hover {
+		color: #3f51b5 !important
+	}
+}

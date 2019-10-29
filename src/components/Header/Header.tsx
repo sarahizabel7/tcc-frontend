@@ -1,7 +1,16 @@
-import * as React from 'react'
-import { Input } from 'react-materialize'
+import * as React from 'react';
 
-export default () => {
+import { history } from '../../main/history';
+
+
+const Header = () => {
+	const handleClick = () => {
+		const searchObject = {
+			pathname: `/search/`,
+		}
+		history.replace(searchObject)
+	}
+
 	return (
 		<section className='section section-header'>
 			<div className='showcase'>
@@ -15,12 +24,14 @@ export default () => {
 						</h5>
 						<br />
 						<br />
-						<a href='!#' className='btn btn-large indigo'>
-							Veja como funciona
-						</a>
+						<button className='btn btn-large indigo' onClick={handleClick}>
+							Encontre serviços
+						</button>
 					</div>
 				</div>
 			</div>
 		</section>
 	)
 }
+
+export default Header

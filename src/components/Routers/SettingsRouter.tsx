@@ -1,10 +1,11 @@
-import * as React from 'react'
-import { Route } from 'react-router'
-import { Switch } from 'react-router-dom'
-import Resume from '../../pages/Settings/Resume'
-import Services from '../../pages/Settings/Services'
-import Account from '../../containers/AccountContainer'
-import Messages from '../../pages/Settings/Messages'
+import * as React from 'react';
+import { Route } from 'react-router';
+import { Switch } from 'react-router-dom';
+
+import Account from '../../containers/AccountContainer';
+import Services from '../../containers/ServicesContainer';
+import Messages from '../../pages/Settings/Messages';
+import Resume from '../../pages/Settings/Resume';
 
 export default () => (
 	<Switch>
