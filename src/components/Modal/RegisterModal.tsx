@@ -1,11 +1,11 @@
-import * as React from 'react'
-import { Modal, Button, Row, Col, Icon } from 'react-materialize'
-import { PulseLoader } from 'react-spinners'
-import { useInput } from '../../hooks/Form'
-import { RegisterInterface } from '../../interfaces/commonInterfaces'
-import { isEmail } from '../../utils/regex'
+import * as React from 'react';
+import { Button, Col, Modal, Row } from 'react-materialize';
+import { PulseLoader } from 'react-spinners';
 
-import Input from '../Input/Input'
+import { useInput } from '../../hooks/Form';
+import { RegisterInterface } from '../../interfaces/commonInterfaces';
+import { isEmail } from '../../utils/regex';
+import Input from '../Input/Input';
 
 const btnStyle = {
 	position: 'absolute',
@@ -92,7 +92,7 @@ export default (props: OwnProps) => {
 					<Input s='12' label='Nome' {...name} />
 					<Input s='12' label='Sobrenome' {...lastname} />
 					<Input s='12' label='Email' {...email} />
-					<Input s='12' label='Criar uma senha' {...password} />
+					<Input s='12' label='Criar uma senha' type='password' autoComplete='off' {...password} />
 					{!props.loading ? (
 						<Button className={'fluid indigo'} s={12}>
 							registrar

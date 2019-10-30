@@ -11,7 +11,6 @@ interface SearchContainerProps {
 }
 
 const containerStyle: React.CSSProperties = {
-    padding: '3em 4em',
     display: 'flex',
     flexDirection: 'column',
     width: '100%'
@@ -31,7 +30,7 @@ const aStyle: React.CSSProperties = {
 const CardImage = (imageSrc: string | {} ) => {
     const titleStyle: React.CSSProperties = { 
         display: 'flex',
-        width: '180px',
+        width: '10em',
         height: 'auto'
     }
 
@@ -144,7 +143,7 @@ const SearchContainer = ({searchedText}: SearchContainerProps) => {
     const getCards = () => {
         const providerCards = providedServices.map((providerInfo, index) => {
             const description = providerInfo.provider.description || 'Sem descrição disponível'
-            const rating = isArray(providerInfo.provider.rating) ? providerInfo.provider.rating[0].grade : providerInfo.provider.rating
+            const rating = isArray(providerInfo.provider.rating) ? providerInfo.provider.rating[0] && providerInfo.provider.rating[0].grade : providerInfo.provider.rating || 0
 
             return (
                 <Col  l={4} m={6} s={12} key={index}>
@@ -168,11 +167,15 @@ const SearchContainer = ({searchedText}: SearchContainerProps) => {
     const cards = providedServices.length > 0 ? getCards() : 'Não há serviços disponíveis 😥'
     const content = isLoading ? loader() : cards
 
+    const h4Style: React.CSSProperties = {
+        paddingLeft: '10px'
+    }
+
     return (
         <>
             { isModalOpen && <ProviderInfoModal open={isModalOpen} modalClose={handleModalClose} providerInfo={selectedProvider} /> }
             <div style={containerStyle}>
-                <h4>Resultados da busca:</h4>
+                <h4 style={h4Style}>Resultados da busca:</h4>
                     {content}
             </div>
         </>

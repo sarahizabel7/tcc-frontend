@@ -119,7 +119,8 @@ class MainRouter extends React.Component<Props, State> {
 	}
 	render() {
 		const { openLogin, openRegister, loading, loginErrors, openProviderRegister } = this.state
-		const { token } = this.props.user
+		const { token, provider } = this.props.user
+
 		return (
 			<Router history={history}>
 				<div style={{ height: '100%' }}>
@@ -159,7 +160,7 @@ class MainRouter extends React.Component<Props, State> {
 					<Switch>
 						<Route
 							path='/'
-							render={() => <ApplicationRouter token={token} />}
+							render={() => <ApplicationRouter user={this.props.user} />}
 						/>
 						<Route
 							exact={true}
@@ -170,7 +171,7 @@ class MainRouter extends React.Component<Props, State> {
 							path='/'
 							render={() =>
 								token ? (
-									<ApplicationRouter token={token} />
+									<ApplicationRouter user={this.props.user} />
 								) : null
 							}
 						/>
@@ -212,7 +213,7 @@ interface OwnState {
 
 interface OwnProps {
 	loadingStatus: boolean
-	user: any
+	user: RootReducerInterface['user']
 }
 
 interface StateProps {

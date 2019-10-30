@@ -7,9 +7,8 @@ import { axiosInstance } from '../../utils/httpClient';
 export const loggedIn = async (user: UserReducer) => {
 	return async (dispatch: Dispatch<any>) => {
 		localStorage.setItem('user', JSON.stringify(user))
-		axiosInstance.defaults.headers.common['Authorization'] = `Token ${
-			user.token
-		}`
+		Object.assign(axiosInstance.defaults, {headers: {Authorization: user.token}});
+
 		dispatch({
 			type: 'USER_LOGGED_IN',
 			payload: user
@@ -23,18 +22,15 @@ export const loggedOut = () => {
 			dispatch({
 				type: 'SET_LOADING_STATE'
 			})
-			await axiosInstance.post('logout')
-		} catch (e) {
-			console.error(e)
-		} finally {
 			localStorage.removeItem('user')
-			delete (axiosInstance as any).defaults.headers.common[
-				'Authorization'
-			]
+			Object.assign(axiosInstance.defaults, {});
 			dispatch({
 				type: 'USER_LOGGED_OUT'
 			})
 			goToMain()
+			await axiosInstance.post('logout')
+		} catch (e) {
+			console.error(e)
 		}
 	}
 }

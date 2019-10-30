@@ -19,10 +19,10 @@ export default (props: OwnProps) => {
 	return (
 		<React.Fragment>
 			<div className='row'>
-				<div className='col push-s1 s2'>
+				<div className='col push-s1 s2 hide-on-med-and-down'>
 					<Brand />
 				</div>
-				<div className='col s6'>
+				<div className='col s9 m6'>
 					<form onSubmit={handleSearch}>
 						<div className='input-field'>
 							<input

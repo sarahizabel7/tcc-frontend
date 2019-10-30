@@ -1,8 +1,10 @@
-import * as React from 'react'
-import { SideNav, SideNavItem, Button } from 'react-materialize'
-import { toPathOnClick } from '../../utils/utils'
+import * as React from 'react';
+import { SideNav, SideNavItem } from 'react-materialize';
 
-export default (props: OwnProps) => (
+import { RootReducerInterface } from '../../interfaces/reducersInterface';
+import { toPathOnClick } from '../../utils/utils';
+
+const SettingsNav = (props: OwnProps) => (
 	<SideNav
 		style={{
 			position: 'relative',
@@ -15,18 +17,6 @@ export default (props: OwnProps) => (
 		}}
 		className='custom-side'
 	>
-		{/* <SideNavItem
-			className='remove-a-hover'
-			icon='account_circle'
-			onClick={(e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) =>
-				e.preventDefault()
-			}
-		>
-			<b>Minha Conta</b>
-		</SideNavItem>
-		<SideNavItem subheader style={{ marginLeft: '18%' }}>
-			Olá, Matheus!
-		</SideNavItem> */}
 		<SideNavItem divider />
 		<SideNavItem
 			className='settings-nav-item'
@@ -42,13 +32,13 @@ export default (props: OwnProps) => (
 		>
 			Mensagens
 		</SideNavItem>
-		<SideNavItem
+		{props.user.isProvider && <SideNavItem
 			className='settings-nav-item'
 			onClick={toPathOnClick('/settings/services')}
 			icon='work_outline'
 		>
 			Serviços
-		</SideNavItem>
+		</SideNavItem>}
 		<SideNavItem
 			className='settings-nav-item'
 			onClick={toPathOnClick('/settings/account')}
@@ -59,4 +49,8 @@ export default (props: OwnProps) => (
 	</SideNav>
 )
 
-interface OwnProps {}
+interface OwnProps {
+	user: RootReducerInterface['user']
+}
+
+export default SettingsNav

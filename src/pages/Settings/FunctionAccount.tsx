@@ -9,7 +9,7 @@ import { toBase64 } from '../../utils/utils';
 const LZUTF8 = require('lzutf8');
 
 const imgStyle: React.CSSProperties = {
-	width: '180px',
+	width: '10em',
 	height: 'auto',
 	marginRight: '1em'
 }

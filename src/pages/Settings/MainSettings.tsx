@@ -1,13 +1,15 @@
-import * as React from 'react'
-import SettingsRouter from '../../components/Routers/SettingsRouter'
-import { SideNavItem, Row, Col } from 'react-materialize'
-import Nav from './Nav'
+import * as React from 'react';
+import { Col, Row } from 'react-materialize';
 
-export default () => (
+import SettingsRouter from '../../components/Routers/SettingsRouter';
+import { RootReducerInterface } from '../../interfaces/reducersInterface';
+import Nav from './Nav';
+
+const MainSettings =  (props: Props) => (
 	<section className='section section-settings'>
 		<Row>
 			<Col s={12} m={3} xl={3}>
-				<Nav />
+				<Nav user={props.user}/>
 			</Col>
 			<Col s={12} m={9} xl={9}>
 				<SettingsRouter />
@@ -15,3 +17,10 @@ export default () => (
 		</Row>
 	</section>
 )
+
+interface Props {
+	user: RootReducerInterface['user']
+}
+
+
+export default MainSettings

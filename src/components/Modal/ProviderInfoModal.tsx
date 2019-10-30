@@ -101,7 +101,7 @@ const getProvidedServices = (provided_services: ProvidedService[]) => {
             {provided_services.map((({charging_method, estimate, price, service}, index) => {
                 const servicePrice =  estimate ? 'Orçamento' : `R$ ${price.toFixed(2)} (${getChargingMethodTranslation(charging_method)})`
                 return (
-                    <li className='collection-item'>{service.name} {servicePrice}</li>
+                    <li className='collection-item' key={index}>{service.name} {servicePrice}</li>
                 )
             }))}   
         </ul>

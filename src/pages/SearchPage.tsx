@@ -4,7 +4,8 @@ import SearchContainer from '../containers/SearchContainer';
 
 const containerStyle: React.CSSProperties = {
     display: 'flex',
-    minHeight: 'calc(100vh - 249px)'
+    minHeight: 'calc(100vh - 249px)',
+    width: '100%'
 }
 
 interface SearchPageProps {
